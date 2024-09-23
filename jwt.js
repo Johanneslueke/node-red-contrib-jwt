@@ -147,18 +147,21 @@ module.exports = function (RED) {
         //fetch jwk and cache it in node
         var jwk;
         var njwk = require('node-jwk');
-        var request = require("request");
-        request({
-            url: url,
-            json: true
-        }, function (error, response, body) {
-            if (!error && response.statusCode === 200) {
-                node.jwk = njwk.JWKSet.fromObject(body);
-                console.log(node.jwk._keys.length + " keys loaded from JWK: " + url );
-            } else {
+        var got = require("got");
+
+        got(url)
+            .then((response) =>{
+                if (response.statusCode === 200) {
+                    const body = JSON.parse(response.body);
+                    node.jwk = njwk.JWKSet.fromObject(body);
+                    console.log(node.jwk._keys.length + " keys loaded from JWK: " + url );
+                } else {
+                    console.log("Unable to fetch JWK: " + url);
+                }
+            }).catch((error) =>{
                 console.log("Unable to fetch JWK: " + url);
-            }
-        })
+            });
+         
     }
 
     function GetTokenKid(token) {

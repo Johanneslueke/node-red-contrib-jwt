@@ -26,9 +26,9 @@
     },
     "homepage": "https://github.com/chameleonbr/node-red-contrib-jwt#readme",
     "dependencies": {
-        "jsonwebtoken": "^8.5.1",
-        "node-jwk": "^0.1.0",
-        "request": "^2.88.2"
+        "got": "^14.4.2",
+        "jsonwebtoken": "^9.0.2",
+        "node-jwk": "^0.1.0" 
     },
     "maintainers": [
         {
